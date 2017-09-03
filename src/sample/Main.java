@@ -15,7 +15,6 @@ import javafx.util.Duration;
 
 public class Main extends Application {
 
-    // testing push
 
     double stepped = 5.0;
 
