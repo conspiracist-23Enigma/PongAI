@@ -15,16 +15,18 @@ import javafx.util.Duration;
 
 public class Main extends Application {
 
+    private final int WINDOW_WIDTH = 700;
+    private final int WINDOW_HEIGHT = 550;
 
-    double stepped = 5.0;
+    private double stepped = 5.0;
 
-    Line line1 = new Line();
-    Line line2 = new Line();
+    private Line line1 = new Line();
+    private Line line2 = new Line();
 
-    double startx1 = 5.0;
-    double endx1 = 5.0;
-    double starty1 = 390;
-    double endy1 = 510;
+    private double startx1 = 5.0;
+    private double endx1 = 5.0;
+    private double starty1 = 390;
+    private double endy1 = 510;
 
 
     private void setUpHandlers(Scene scene) {
@@ -38,10 +40,10 @@ public class Main extends Application {
                         line1.setStartY(starty1);
                         line1.setEndY(endy1);
                     }else {
-                        starty1 -= 20.0;
-                        endy1 -= 20.0;
-                        line1.setStartY(starty1);
-                        line1.setEndY(endy1);
+//                        starty1 -= 20.0;
+//                        endy1 -= 20.0;
+//                        line1.setStartY(starty1);
+//                        line1.setEndY(endy1);
                     }
 
                 }else if (event.getCode() == KeyCode.J) {
@@ -51,10 +53,10 @@ public class Main extends Application {
                         line1.setStartY(starty1);
                         line1.setEndY(endy1);
                     }else {
-                        starty1 += 20.0;
-                        endy1 += 20.0;
-                        line1.setStartY(starty1);
-                        line1.setEndY(endy1);
+//                        starty1 += 20.0;
+//                        endy1 += 20.0;
+//                        line1.setStartY(starty1);
+//                        line1.setEndY(endy1);
                     }
 
                 }
@@ -66,7 +68,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-
+        /* draw the left bat*/
         line1.setStartX(startx1);
         line1.setStartY(starty1);
         line1.setEndX(endx1);
@@ -74,13 +76,14 @@ public class Main extends Application {
         line1.setStrokeWidth(10.0);
         line1.setStroke(Color.WHITE);
 
-
+        /* draw the right bat*/
         line2.setStartX(1195.0);
         line2.setStartY(390);
         line2.setEndX(1195.0);
         line2.setEndY(510);
         line2.setStrokeWidth(10.0);
         line2.setStroke(Color.WHITE);
+
 
         Group root = new Group(line1,line2);
         Scene scene = new Scene(root, 1200, 900);
@@ -104,6 +107,7 @@ public class Main extends Application {
                 }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
         primaryStage.show();
 
     }
