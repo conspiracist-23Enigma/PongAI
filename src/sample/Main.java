@@ -30,8 +30,9 @@ public class Main extends Application {
 
     // starting position of the left paddle
     private double startx1 = WINDOW_WIDTH / 100;
-    private double endx1 = WINDOW_WIDTH / 100;
     private double starty1 = (WINDOW_HEIGHT / 2) - 60;
+
+    private double endx1 = WINDOW_WIDTH / 100;
     private double endy1 = (WINDOW_HEIGHT / 2) + 60;
 
     // Ball position X and Y
@@ -45,9 +46,9 @@ public class Main extends Application {
         scene.setOnKeyPressed(event -> {
 
                 if (event.getCode() == KeyCode.K) {
-                    if ( endy1 <= WINDOW_HEIGHT) {
-                        starty1 += 20.0;
-                        endy1 += 20.0;
+                    if ( endy1 < WINDOW_HEIGHT) {
+                        starty1 += WINDOW_HEIGHT / 30;
+                        endy1 += WINDOW_HEIGHT / 30;
                         line1.setStartY(starty1);
                         line1.setEndY(endy1);
                     }
@@ -55,8 +56,8 @@ public class Main extends Application {
 
                 }else if (event.getCode() == KeyCode.J) {
                     if (starty1 >= 0 ) {
-                        starty1 -= 20.0;
-                        endy1 -= 20.0;
+                        starty1 -= WINDOW_HEIGHT / 30;
+                        endy1 -= WINDOW_HEIGHT / 30;
                         line1.setStartY(starty1);
                         line1.setEndY(endy1);
                     }
