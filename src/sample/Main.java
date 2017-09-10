@@ -46,7 +46,8 @@ public class Main extends Application {
 
     // Ball position X and Y
     private Circle ball = new Circle(WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2, 10, Color.WHITE);
-    private double move = 5.0;
+    private double moveX = 5.0;
+    private double moveY = 5.0;
 
     // private void coreGame(){
     //
@@ -108,10 +109,10 @@ public class Main extends Application {
                         // if (ball.getCenterX() > WINDOW_WIDTH -> player 1 gets the point
 
                         if ( 10 < ball.getCenterY() && ball.getCenterY() < WINDOW_HEIGHT - 10){
-                            ball.setCenterY(ball.getCenterY() + move);
+                            ball.setCenterY(ball.getCenterY() + moveY);
                         }else{
-                            move *= (-1);
-                            ball.setCenterY(ball.getCenterY() + move);
+                            moveY *= (-1);
+                            ball.setCenterY(ball.getCenterY() + moveY);
                         }
 
                 }));
