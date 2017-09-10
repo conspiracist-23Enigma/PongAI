@@ -31,6 +31,7 @@ public class Main extends Application {
     private final int WINDOW_HEIGHT = 600;
 
     // Score
+    // TODO cant update text score with this set up
     private int P1Score = 0;
     private int P2Score = 0;
     private Label P1Text = new Label(Integer.toString(P1Score));
