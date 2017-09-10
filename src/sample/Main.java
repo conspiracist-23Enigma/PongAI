@@ -44,9 +44,7 @@ public class Main extends Application {
 
 
     // Ball position X and Y
-    private double ballX = WINDOW_HEIGHT / 2;
-    private double ballY = WINDOW_WIDTH / 2;
-    private Circle ball = new Circle(ballX, ballY, 10, Color.WHITE);
+    private Circle ball = new Circle(WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2, 10, Color.WHITE);
     private double move = 5.0;
 
     // private void coreGame(){
@@ -108,7 +106,12 @@ public class Main extends Application {
 
                         // if (ball.getCenterX() > WINDOW_WIDTH -> player 1 gets the point
 
-                        // if ( 0 < ball.getCenterY() < WINDOW_HEIGHT - 10) -> ball.setCenterY(ball.setCenterY * (-1))
+                        if ( 10 < ball.getCenterY() && ball.getCenterY() < WINDOW_HEIGHT - 10){
+                            ball.setCenterY(ball.getCenterY() + move);
+                        }else{
+                            move *= (-1);
+                            ball.setCenterY(ball.getCenterY() + move);
+                        }
 
                 }));
         timeline.setCycleCount(Animation.INDEFINITE);
