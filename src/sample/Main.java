@@ -15,19 +15,26 @@ import javafx.util.Duration;
 
 public class Main extends Application {
 
+    // window size
     private final int WINDOW_WIDTH = 700;
     private final int WINDOW_HEIGHT = 550;
 
+    // right paddle animation
     private double stepped = 5.0;
 
+    // paddles (could be replaced by rectangle?)
     private Line line1 = new Line();
     private Line line2 = new Line();
 
+    // starting position of the left paddle
     private double startx1 = 5.0;
     private double endx1 = 5.0;
     private double starty1 = 390;
     private double endy1 = 510;
 
+    // Ball position X and Y
+
+    // private void coreGame(){}
 
     private void setUpHandlers(Scene scene) {
         /* create handlers for key press and release events */
