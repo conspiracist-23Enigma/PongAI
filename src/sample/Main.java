@@ -104,9 +104,12 @@ public class Main extends Application {
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15),
                 ae -> {
-                        // if (ball.getCenterX() < 0 -> player 2 gets a point
+                        // if (ball.getCenterX() < 0) -> player 2 gets a point
 
-                        // if (ball.getCenterX() > WINDOW_WIDTH -> player 1 gets the point
+                        // if (ball.getCenterX() > WINDOW_WIDTH) -> player 1 gets the point
+
+                        // when the ball hits the bat, return it as a fraction of the move depending on which part
+                        // of the bat it hit. also have to change the direction of the X and Y components seperately.
 
                         if ( 10 < ball.getCenterY() && ball.getCenterY() < WINDOW_HEIGHT - 10){
                             ball.setCenterY(ball.getCenterY() + moveY);
