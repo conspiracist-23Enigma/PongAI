@@ -24,7 +24,7 @@ import sun.java2d.pipe.SolidTextRenderer;
 public class Main extends Application {
 
     // Scene Nodes
-    Group root = new Group();
+    private Group root = new Group();
 
     // window size
     private final int WINDOW_WIDTH = 700;
@@ -40,14 +40,17 @@ public class Main extends Application {
 
 
     // rectangle paddles
-    private Rectangle paddle1 = new Rectangle(0, WINDOW_HEIGHT / 3, 10,120);
-    private Rectangle paddle2 = new Rectangle(WINDOW_WIDTH - 10, WINDOW_HEIGHT / 3, 10,120);
+    private Rectangle paddle1 = new Rectangle(0, WINDOW_HEIGHT / 2 - 60, 10,120);
+    private Rectangle paddle2 = new Rectangle(WINDOW_WIDTH - 10, WINDOW_HEIGHT / 2 - 60 , 10,120);
 
 
     // Ball position X and Y
-    private Circle ball = new Circle(WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2, 10, Color.WHITE);
+    private Circle ball = new Circle(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 10, Color.WHITE);
     private double moveX = 5.0;
     private double moveY = 5.0;
+
+    private boolean GAME_WON_STATE = false;
+    private int GAMES_PLAYED;
 
     // private void coreGame(){
     //
@@ -77,8 +80,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         Line mid = new Line(WINDOW_WIDTH / 2 , 0, WINDOW_WIDTH/2, WINDOW_HEIGHT);
-        mid.setFill(Color.WHITE);
-        mid.setStrokeWidth(10);
+        mid.setStroke(Color.WHITE);
+        mid.setStrokeWidth(2);
 
         paddle1.setFill(Color.WHITE);
         paddle2.setFill(Color.WHITE);
@@ -87,7 +90,7 @@ public class Main extends Application {
         P1Text.setFont(new Font("Arial", 20));
         P2Text.setFont(new Font("Arial", 20));
         scoreBox.setLayoutY(WINDOW_HEIGHT - 50);
-        scoreBox.setLayoutX(WINDOW_WIDTH / 2 - 25);
+        scoreBox.setLayoutX(WINDOW_WIDTH / 2 - 38.5);
 
         scoreBox.getChildren().addAll(P1Text, P2Text);
 
@@ -102,8 +105,12 @@ public class Main extends Application {
         setUpHandlers(scene);
 
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15),
-                ae -> {
+
+        primaryStage.show();
+
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15),
+                    ae -> {
                         // if (ball.getCenterX() < 0) -> player 2 gets a point
 
                         // if (ball.getCenterX() > WINDOW_WIDTH) -> player 1 gets the point
@@ -118,16 +125,20 @@ public class Main extends Application {
                             ball.setCenterY(ball.getCenterY() + moveY);
                         }
 
-                }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+                    }));
 
-        primaryStage.show();
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+
+
+
 
     }
 
 
     public static void main(String[] args) {
         launch(args);
+
+        
     }
 }
