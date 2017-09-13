@@ -114,7 +114,6 @@ public class Main extends Application {
                         if (ball.getCenterX() < 0) {
                             P2Score += 1;
                             P2Text.setText(P2Score + "");
-
                         }else if (ball.getCenterX() > WINDOW_WIDTH){
                             P1Score += 1;
                             P1Text.setText(P1Score + "");
