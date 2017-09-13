@@ -17,7 +17,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.security.Key;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -27,8 +26,8 @@ public class Main extends Application {
     private Group root = new Group();
 
     // window size
-    private final int WINDOW_WIDTH = 700;
-    private final int WINDOW_HEIGHT = 600;
+    private static final int WINDOW_WIDTH = 700;
+    private static final int WINDOW_HEIGHT = 600;
 
     // Score
     // TODO cant update text score with this set up
@@ -40,8 +39,8 @@ public class Main extends Application {
 
 
     // rectangle paddles
-    private Rectangle paddle1 = new Rectangle(0, WINDOW_HEIGHT / 2 - 60, 10,120);
-    private Rectangle paddle2 = new Rectangle(WINDOW_WIDTH - 10, WINDOW_HEIGHT / 2 - 60 , 10,120);
+    private static Rectangle paddle1 = new Rectangle(0, WINDOW_HEIGHT / 2 - 60, 10,120);
+    private static Rectangle paddle2 = new Rectangle(WINDOW_WIDTH - 10, WINDOW_HEIGHT / 2 - 60 , 10,120);
 
     private boolean UP_ARROWKEY = false;
     private boolean DOWN_ARROWKEY = false;
@@ -50,11 +49,11 @@ public class Main extends Application {
 
 
     // Ball position X and Y
-    private Circle ball = new Circle(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 10, Color.WHITE);
+    private static Circle ball = new Circle(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 10, Color.WHITE);
     private double Static_moveX = 5.0;
     private double Static_moveY = 5.0;
-    private double moveX = 5.0;
-    private double moveY = 5.0;
+    private static double moveX = 5.0;
+    private static double moveY = 5.0;
 
 
     private int SIDE_TO_BE_PLAYED = 0;
@@ -75,19 +74,23 @@ public class Main extends Application {
                 case J: UP_J             = true; break;
                 case K: DOWN_K           = true; break;
                 case SPACE: {
-                    SIDE_TO_BE_PLAYED = ThreadLocalRandom.current().nextInt(0,2);
-                    if (SIDE_TO_BE_PLAYED == 0){
-                        moveX = Static_moveX;
-                        if (ThreadLocalRandom.current().nextInt(0,2) == 0){
-                            moveY = Static_moveY;
-                        }else moveY = -Static_moveY;
-                    }else {
-                        moveX = -Static_moveX;
-                        if (ThreadLocalRandom.current().nextInt(0,2) == 0){
-                            moveY = Static_moveY;
-                        }else moveY = -Static_moveY;
+
+                    if (!BALL_IN_PLAY){
+                        SIDE_TO_BE_PLAYED = ThreadLocalRandom.current().nextInt(0,2);
+                        if (SIDE_TO_BE_PLAYED == 0){
+                            moveX = Static_moveX;
+                            if (ThreadLocalRandom.current().nextInt(0,2) == 0){
+                                moveY = Static_moveY;
+                            }else moveY = -Static_moveY;
+                        }else {
+                            moveX = -Static_moveX;
+                            if (ThreadLocalRandom.current().nextInt(0,2) == 0){
+                                moveY = Static_moveY;
+                            }else moveY = -Static_moveY;
+                        }
+                        BALL_IN_PLAY = true;
                     }
-                    BALL_IN_PLAY = true;
+
                 }
             }
         });
@@ -103,6 +106,24 @@ public class Main extends Application {
         });
 
     }
+
+    private static void reflection_physics() {
+        if ((ball.getCenterX() + moveX  <= 10 &&
+                (ball.getCenterY() + moveY >= paddle1.getY() && ball.getCenterY() + moveY <= paddle1.getY() + 120))
+                || (ball.getCenterX() + moveX >= WINDOW_WIDTH - 10 &&
+                (ball.getCenterY() + moveY >= paddle2.getY() && ball.getCenterY() + moveY <= paddle2.getY() + 120))){
+            {
+                ball.setCenterY(ball.getCenterY() + moveY);
+                ball.setCenterX(ball.getCenterX() + moveX);
+                moveX *= (-1);
+            }
+
+        } else {
+            ball.setCenterY(ball.getCenterY() + moveY);
+            ball.setCenterX(ball.getCenterX() + moveX);
+        }
+    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -134,7 +155,6 @@ public class Main extends Application {
 
 
 
-        primaryStage.show();
 
 
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15),
@@ -184,20 +204,24 @@ public class Main extends Application {
 
                             }
 
-                            // if (ball.getCenterX() > WINDOW_WIDTH) -> player 1 gets the point
 
-                            // when the ball hits the bat, return it as a fraction of the move depending on which part
-                            // of the bat it hit. also have to change the direction of the X and Y components seperately.
+                            if ( 10 < ball.getCenterY() && ball.getCenterY() < WINDOW_HEIGHT - 10){
+                                reflection_physics();
 
-                            ball.setCenterX(ball.getCenterX() + moveX);
+                            }else{
+                                moveY *= (-1);
+                                reflection_physics();
 
-
+                            }
                         }
 
                     }));
 
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
+
+
+        primaryStage.show();
 
 
 
