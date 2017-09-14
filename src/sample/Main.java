@@ -64,19 +64,21 @@ public class Main extends Application {
     //
     // }
 
-    private static void paddle_reflection_physics(Label p1Text, Label p2Text) {
+    private static void ball_physics(Label p1Text, Label p2Text) {
         if (ball.getCenterX() + moveX < 10 &&
-                ball.getCenterY() + moveY > paddle1.getY() && ball.getCenterY() + moveY < paddle1.getY() + 120) {
+                ball.getCenterY() + moveY >= paddle1.getY() && ball.getCenterY() + moveY <= paddle1.getY() + 120) {
 
             ball.setCenterY(ball.getCenterY() + moveY);
             ball.setCenterX(paddle1.getX() + 20); // x is from left side and ball is on right, so length of paddle and radius
             moveX *= (-1.1);
+            moveY = delflectionAngle(moveX, moveY, paddle1);
 
         } else if (ball.getCenterX() + moveX > WINDOW_WIDTH - 10 &&
-                ball.getCenterY() + moveY > paddle2.getY() && ball.getCenterY() + moveY < paddle2.getY() + 120) {
+                ball.getCenterY() + moveY >= paddle2.getY() && ball.getCenterY() + moveY <= paddle2.getY() + 120) {
 
             ball.setCenterX(paddle2.getX() - 10); // x is on left side and ball is on left as well, so only radius
-            moveX *= (-1.1);
+            moveX *= (-1.05);
+            moveY = delflectionAngle(moveX, moveY, paddle2);
 
         } else if (ball.getCenterX() + moveX < 10) {
             ball.setCenterY(ball.getCenterY() + moveY);
@@ -104,6 +106,23 @@ public class Main extends Application {
 
         //return The score to be set to the global variable
         return pScore;
+    }
+
+    private static double delflectionAngle(double new_moveX, double old_moveY, Rectangle paddle){
+
+        new_moveX = Math.abs(new_moveX);
+        double paddle_Y = paddle.getY();
+        double partition = paddle.getHeight() / 7;
+        double radian_conversion = Math.PI / 180;
+
+        if (ball.getCenterY() <= paddle_Y + partition ){
+            return -(new_moveX / (Math.tan(30 * radian_conversion)));
+        } else if (ball.getCenterY() >= paddle_Y + 3*partition && ball.getCenterY() <= paddle_Y + 4*partition){
+            return 0;
+        }else if (ball.getCenterY() >= paddle_Y + 6*partition){
+            return new_moveX / (Math.tan(30 * radian_conversion));
+        }
+        else return old_moveY;
     }
 
     public static void main(String[] args) {
@@ -178,6 +197,7 @@ public class Main extends Application {
 
         paddle1.setFill(Color.WHITE);
         paddle2.setFill(Color.WHITE);
+
         P1Text.setTextFill(Color.WHITE);
         P2Text.setTextFill(Color.WHITE);
         P1Text.setFont(new Font("Arial", 20));
@@ -227,14 +247,16 @@ public class Main extends Application {
 
                     }
 
+                    //Checks if the flag for starting the round has been set
                     if (BALL_IN_PLAY) {
 
+                        //The conditionals below define the wall reflection physics
                         if (10 < ball.getCenterY() && ball.getCenterY() < WINDOW_HEIGHT - 10) {
-                            paddle_reflection_physics(P1Text, P2Text);
+                            ball_physics(P1Text, P2Text);
 
                         } else {
                             moveY *= (-1);
-                            paddle_reflection_physics(P1Text, P2Text);
+                            ball_physics(P1Text, P2Text);
 
                         }
                     }
