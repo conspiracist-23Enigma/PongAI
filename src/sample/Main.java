@@ -26,8 +26,8 @@ public class Main extends Application {
     private Group root = new Group();
 
     // window size
-    private static final int WINDOW_WIDTH = 700;
-    private static final int WINDOW_HEIGHT = 600;
+    private static final int WINDOW_WIDTH = 1000;
+    private static final int WINDOW_HEIGHT = 700;
 
     // Score
     private int P1Score = 0;
@@ -41,6 +41,7 @@ public class Main extends Application {
     // rectangle paddles
     private static Rectangle paddle1 = new Rectangle(0, WINDOW_HEIGHT / 2 - 60, 10,120);
     private static Rectangle paddle2 = new Rectangle(WINDOW_WIDTH - 10, WINDOW_HEIGHT / 2 - 60 , 10,120);
+    private double paddleMove = WINDOW_HEIGHT / 80;
 
     // event state holders
     private boolean UP_ARROWKEY = false;
@@ -105,7 +106,7 @@ public class Main extends Application {
             ball.setCenterX(ball.getCenterX() + moveX);
             moveX *= (-1);
 
-        } else { // moving around
+        } else {
             ball.setCenterY(ball.getCenterY() + moveY);
             ball.setCenterX(ball.getCenterX() + moveX);
         }
@@ -142,20 +143,20 @@ public class Main extends Application {
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15),
                     ae -> {
 
-                        if (DOWN_K && paddle1.getY() < WINDOW_HEIGHT - 120) {
-                            paddle1.setY(paddle1.getY() + WINDOW_HEIGHT / 50);
+                        if (DOWN_K && paddle1.getY() <= WINDOW_HEIGHT - paddle1.getHeight()) {
+                            paddle1.setY(paddle1.getY() + paddleMove);
                         }
 
-                        if (UP_J && paddle1.getY() != 0) {
-                            paddle1.setY(paddle1.getY() - WINDOW_HEIGHT / 50);
+                        if (UP_J && paddle1.getY() >= 0) {
+                            paddle1.setY(paddle1.getY() - paddleMove);
                         }
 
-                        if (DOWN_ARROWKEY && paddle2.getY() < WINDOW_HEIGHT - 120) {
-                            paddle2.setY(paddle2.getY() + WINDOW_HEIGHT / 50);
+                        if (DOWN_ARROWKEY && paddle2.getY() <= WINDOW_HEIGHT - paddle2.getHeight()) {
+                            paddle2.setY(paddle2.getY() + paddleMove);
                         }
 
-                        if (UP_ARROWKEY && paddle2.getY() != 0) {
-                            paddle2.setY(paddle2.getY() - WINDOW_HEIGHT / 50);
+                        if (UP_ARROWKEY && paddle2.getY() >= 0) {
+                            paddle2.setY(paddle2.getY() - paddleMove);
                         }
 
                         if (BALL_IN_PLAY){
