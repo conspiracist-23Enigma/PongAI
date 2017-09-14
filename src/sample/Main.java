@@ -118,6 +118,8 @@ public class Main extends Application {
 
         mid.setStroke(Color.WHITE);
         mid.setStrokeWidth(2);
+        mid.setOpacity(0.75);
+        mid.getStrokeDashArray().addAll(15d, 15d);
 
         paddle1.setFill(Color.WHITE);
         paddle2.setFill(Color.WHITE);
