@@ -21,32 +21,41 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Main extends Application {
 
+    // Scene Nodes
+    private Group root = new Group();
+
     // window size
     private static final int WINDOW_WIDTH = 700;
     private static final int WINDOW_HEIGHT = 600;
+
     // rectangle paddles
     private static Rectangle paddle1 = new Rectangle(0, WINDOW_HEIGHT / 2 - 60, 10, 120);
     private static Rectangle paddle2 = new Rectangle(WINDOW_WIDTH - 10, WINDOW_HEIGHT / 2 - 60, 10, 120);
     private double paddleMove = WINDOW_HEIGHT / 50;
+
     // Ball position X and Y
     private static Circle ball = new Circle(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 10, Color.WHITE);
     private static double moveX = 5.0;
     private static double moveY = 5.0;
-    // Scene Nodes
-    private Group root = new Group();
+
     // Score
-    // TODO cant update text score with this set up
     private static int P1Score = 0;
     private static int P2Score = 0;
     private Label P1Text = new Label(Integer.toString(P1Score));
     private Label P2Text = new Label(Integer.toString(P2Score));
     private HBox scoreBox = new HBox(50);
+
+    //Key Event Buffers
     private boolean UP_ARROWKEY = false;
     private boolean DOWN_ARROWKEY = false;
     private boolean UP_J = false;
     private boolean DOWN_K = false;
+
+    //Ball Movement
     private double Static_moveX = 5.0;
     private double Static_moveY = 5.0;
+
+    //Game State
     private int SIDE_TO_BE_PLAYED = 0;
     private int GAMES_PLAYED;
     private static boolean BALL_IN_PLAY = false;
@@ -93,7 +102,7 @@ public class Main extends Application {
         ball.setCenterX(WINDOW_WIDTH / 2);
         ball.setCenterY(WINDOW_HEIGHT / 2);
 
-
+        //return The score to be set to the global variable
         return pScore;
     }
 
@@ -145,17 +154,13 @@ public class Main extends Application {
         scene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
                 case UP:
-                    UP_ARROWKEY = false;
-                    break;
+                    UP_ARROWKEY = false; break;
                 case DOWN:
-                    DOWN_ARROWKEY = false;
-                    break;
+                    DOWN_ARROWKEY = false; break;
                 case J:
-                    UP_J = false;
-                    break;
+                    UP_J = false; break;
                 case K:
-                    DOWN_K = false;
-                    break;
+                    DOWN_K = false; break;
             }
 
         });
@@ -168,6 +173,8 @@ public class Main extends Application {
         Line mid = new Line(WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT);
         mid.setStroke(Color.WHITE);
         mid.setStrokeWidth(2);
+        mid.setOpacity(0.75);
+        mid.getStrokeDashArray().addAll(15d, 15d);
 
         paddle1.setFill(Color.WHITE);
         paddle2.setFill(Color.WHITE);
